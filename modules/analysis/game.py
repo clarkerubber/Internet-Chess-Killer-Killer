@@ -82,6 +82,9 @@ class analysed_game: # subjective to the player being analysed
     def percent_errors(self):
         return list(i.percent_error() for i in self.positions)
 
+    def scaled_errors(self):
+        return list(i.scaled_error() for i in self.positions)
+
 class analysed_position:
     def __init__(self, played, legals):
         self.played = played # analysed_move
@@ -109,6 +112,9 @@ class analysed_position:
         except ZeroDivisionError:
             return 0
 
+    def scaled_error(self):
+        return 1000*abs(scaled_eval(self.best_eval) - scaled_eval(bounded_eval(self.played.sort_val())))
+
 class analysed_move:
     def __init__(self, move, evaluation):
         self.move = move
@@ -133,3 +139,6 @@ class analysed_move:
 
 def bounded_eval(e):
     return min(1000, max(-1000, e))
+
+def scaled_eval(e):
+    return 2 / (1 + np.exp(-0.005 * e)) - 1

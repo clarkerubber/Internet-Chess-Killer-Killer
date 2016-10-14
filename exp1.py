@@ -77,8 +77,18 @@ for x, y in cheaters.items():
 
 print 'min mode 0 freq'
 print min(cmodes)
-	
+
 """
+for x, y in legits.items():
+	print " "
+	print y.error_v_move_no()
+	print y.scaled_error_v_move_no()
+
+for x, y in cheaters.items():
+	print " "
+	print y.error_v_move_no()
+	print y.scaled_error_v_move_no()
+
 fig, ax = plt.subplots()
 
 for x, y in legits.items():
@@ -86,6 +96,14 @@ for x, y in legits.items():
 	ax.scatter(xt, yt)
 
 fig.savefig('figures/legits/merged/ErrorVMoveNo.svg')
+
+fig, ax = plt.subplots()
+
+for x, y in legits.items():
+	xt, yt = y.scaled_error_v_move_no()
+	ax.scatter(xt, yt)
+
+fig.savefig('figures/legits/merged/ScaledErrorVMoveNo.svg')
 
 
 fig, ax = plt.subplots()
@@ -95,4 +113,12 @@ for x, y in cheaters.items():
 	ax.scatter(xt, yt)
 
 fig.savefig('figures/cheaters/merged/ErrorVMoveNo.svg')
+
+fig, ax = plt.subplots()
+
+for x, y in cheaters.items():
+	xt, yt = y.scaled_error_v_move_no()
+	ax.scatter(xt, yt)
+
+fig.savefig('figures/cheaters/merged/ScaledErrorVMoveNo.svg')
 """
