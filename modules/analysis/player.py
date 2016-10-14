@@ -39,11 +39,42 @@ class analysed_player:
         ax.plot(list(range(max(*x))), avgs, 'r-')
         ax.set_xlabel('move number')
         ax.set_ylabel('avg error')
+
+    def graph_scaled_error_v_move_no(self):
+        x = sum(list(i.move_numbers() for i in self.games), [])
+        y = sum(list(i.scaled_errors() for i in self.games), [])
+
+        avgs = []
+        for t in range(max(*x)):
+            l = []
+            for xt, yt in zip(x, y):
+                if xt == t:
+                    l.append(yt)
+            avgs.append(avg(l))
+
+        fig, ax = plt.subplots()
+        ax.plot(list(range(max(*x))), avgs, 'r-')
+        ax.set_xlabel('move number')
+        ax.set_ylabel('avg error (scaled)')
         return fig
 
     def error_v_move_no(self):
         x = sum(list(i.move_numbers() for i in self.games), [])
         y = sum(list(i.actual_errors() for i in self.games), [])
+
+        avgs = []
+        for t in range(max(*x)):
+            l = []
+            for xt, yt in zip(x, y):
+                if xt == t:
+                    l.append(yt)
+            avgs.append(avg(l))
+
+        return (x, y)
+
+    def scaled_error_v_move_no(self):
+        x = sum(list(i.move_numbers() for i in self.games), [])
+        y = sum(list(i.scaled_errors() for i in self.games), [])
 
         avgs = []
         for t in range(max(*x)):
@@ -64,6 +95,7 @@ class analysed_player:
         y1 = sum(list(i.ranks() for i in self.games), [])
         y2 = sum(list(i.actual_errors() for i in self.games), [])
         y3 = sum(list(i.percent_errors() for i in self.games), [])
+        y4 = sum(list(i.scaled_errors() for i in self.games), [])
 
         fig, ax = plt.subplots()
         avgs = []
@@ -89,7 +121,7 @@ class analysed_player:
         fig.show()
 
         fig, ax = plt.subplots()
-        ax.scatter(y3, y1)
+        ax.scatter(y4, y1)
         ax.set_xlabel('percent error')
         ax.set_ylabel('move rank')
         fig.savefig('figures/'+self.name+'_PercentVRank.svg')
