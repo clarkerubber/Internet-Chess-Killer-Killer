@@ -54,17 +54,25 @@ cheateravg = avg(sum(list(y.ranks() for x, y in cheaters.items()), []))
 #print 'cheateravg: '+str(cheateravg)
 print 'legits'
 lmodes = []
+lmodes2 = []
 cmodes = []
+cmodes2 = []
 for x, y in legits.items():
 	data = Counter(y.ranks())
 	print '   '+y.name+':'
 	m0freq = data.most_common(1)[0][1]/float(len(y.ranks()))
 	lmodes.append(m0freq)
+	data = Counter([x for x in y.ranks() if x <= 20])
+	m1freq = sum(data.values())/float(len(y.ranks()))
+	lmodes2.append((m0freq, m1freq))
 	print '    avg: '+str(avg(y.ranks()))
 	print '   mode: '+str(m0freq)
+	print '   good: '+str(m1freq)
 
 print 'max mode 0 freq'
 print max(lmodes)
+print 'max mode2 0 freq'
+print sorted(lmodes2)
 
 print 'cheaters'
 for x, y in cheaters.items():
@@ -72,11 +80,17 @@ for x, y in cheaters.items():
 	print '   '+y.name+':'
 	m0freq = data.most_common(1)[0][1]/float(len(y.ranks()))
 	cmodes.append(m0freq)
+	data = Counter([x for x in y.ranks() if x <= 20])
+	m1freq = sum(data.values())/float(len(y.ranks()))
+	cmodes2.append((m0freq, m1freq))
 	print '    avg: '+str(avg(y.ranks()))
 	print '   mode: '+str(m0freq)
+	print '   good: '+str(m1freq)
 
 print 'min mode 0 freq'
 print min(cmodes)
+print 'min mode2 0 freq'
+print sorted(cmodes2)
 
 """
 for x, y in legits.items():
